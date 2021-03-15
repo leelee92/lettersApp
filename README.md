@@ -84,4 +84,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 # TODO
 
-- Factoriser le code serveur
+* Factoriser le code serveur
+  - Lors de la demande de partie : faire un switch => si cursor = 0, si cursor = 1 , si cursor > 2
+  - Factoriser certaines fonctions de traitement
+  - Chercher hebergement gratuit mongo + node ou deployer sur VPS starter OVH
