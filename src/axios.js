@@ -2,6 +2,6 @@ import axios from "axios";
 
 export default function api() {
   return axios.create({
-    baseURL: "http://localhost:8081",
+    baseURL: "http://152.228.171.195:8081/"
   });
 }
