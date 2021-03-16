@@ -1,5 +1,12 @@
 <template>
   <div class="home">
+    <p>
+      DES LETTRES ET DES LETTRES !<br />
+      Composez le mot le plus long possible afin de gagner contre votre
+      adversaire. <br />
+      Nombre de joueurs : 2
+    </p>
+    <p>PRET ?</p>
     <form @submit="submit">
       <label id="nom">
         Pseudo :
@@ -36,7 +43,7 @@ export default {
   created() {
     api()
       .get("/scores")
-      .then((result) => {
+      .then(result => {
         this.scores = result.data;
       });
 
@@ -48,15 +55,15 @@ export default {
       this.setStoreSocket(socket);
 
       // joueur redirigé vers la partie
-      socket.on("s-redirige-vers-la-partie", (numeroPartie, pseudo) => {
-        this.setStorePseudo(pseudo);
+      socket.on("s-redirige-vers-la-partie", numeroPartie => {
+        this.setStorePseudo(this.nom);
         this.setStorePartie(numeroPartie);
         this.$router.replace({
-          name: "Game",
+          name: "Game"
         });
       });
 
-      socket.on("s-information-queue", (data) => {
+      socket.on("s-information-queue", data => {
         if (data.code < 100) {
           this.message.attente = true;
           this.bouton = false;
@@ -72,13 +79,13 @@ export default {
       message: {
         attente: false,
         encours: false,
-        pseudo: false,
+        pseudo: false
       },
-      bouton: true,
+      bouton: true
     };
   },
   computed: {
-    ...mapState(["pseudo"]),
+    ...mapState(["pseudo"])
   },
   methods: {
     submit(event) {
@@ -86,7 +93,7 @@ export default {
       this.message.encours = false;
       this.message.pseudo = false;
       // joueur demande a rejoindre une partie
-      this.checkPseudo(this.nom).then((result) => {
+      this.checkPseudo(this.nom).then(result => {
         if (result.data != "error") {
           socket.emit("c-demande-partie", result.data);
         } else {
@@ -108,13 +115,13 @@ export default {
     },
     leave() {
       window.location.assign(process.env.BASE_URL);
-    },
+    }
   },
   filters: {
     date: function(date) {
       return new Date(date).toLocaleString();
-    },
-  },
+    }
+  }
 };
 </script>
 
